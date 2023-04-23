@@ -1,7 +1,7 @@
 package controller.manager;
 
 import model.Interface.CRUD;
-import model.Interface.InUpSort;
+import model.Interface.InSearchSort;
 import model.Interface.RealMoney;
 import model.book.Book;
 import model.book.BusinessBook;
@@ -9,17 +9,11 @@ import model.book.FictionBook;
 import model.book.ProgramingBook;
 import read_write_file_singleton.ReadWriteFile;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
-public class BookManager implements CRUD<Book>,InUpSort<Book>,RealMoney {
+public class BookManager implements CRUD<Book>, InSearchSort<Book>,RealMoney {
     private Scanner scanner = new Scanner(System.in);
-    public ReadWriteFile<Book> bookManager = ReadWriteFile.getINSTANCE();
+    public ReadWriteFile<Book> readWriteFile = ReadWriteFile.getINSTANCE();
     public List<Book> books;
     public BookManager() {
         books = new ArrayList<>();
@@ -40,16 +34,17 @@ public class BookManager implements CRUD<Book>,InUpSort<Book>,RealMoney {
         books.add((Book) value);
     }
     public void write(){
-        bookManager.writeFile(books,"books.txt");
+        readWriteFile.writeFile(books,"books.txt");
     }
 
     @Override
     public void display(List<Book> value) {
-        for (Book b:books
+        for (Book b:value
              ) {
             System.out.println(b);
+
         }
-        bookManager.writeFile(books,"books.txt");
+        readWriteFile.writeFile(books,"books.txt");
     }
 
     @Override
@@ -61,6 +56,7 @@ public class BookManager implements CRUD<Book>,InUpSort<Book>,RealMoney {
                 books.set(i,(Book) value);
             }
         }
+        readWriteFile.writeFile();
 
     }
 
@@ -77,16 +73,27 @@ public class BookManager implements CRUD<Book>,InUpSort<Book>,RealMoney {
 
     @Override
     public void insert(List<Book> list, int index) {
-
+        if(index >= 0) {
+            books.set(index,(Book) list);
+        } else {
+            books.add((Book) list);
+        }
     }
 
     @Override
-    public void update(List<Book> list) {
-
+    public void search(List<Book> list, String name) {
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).equals(name)){
+                System.out.println(name + " index : " + i );
+            } else {
+                System.out.println("Can not found: ");
+            }
+        }
     }
 
     @Override
     public void sort() {
+
 
     }
 
@@ -94,4 +101,18 @@ public class BookManager implements CRUD<Book>,InUpSort<Book>,RealMoney {
     public void getRealMoney() {
 
     }
+    public void readData(){
+        books = readWriteFile.readFile("books.txt");
+
+    }
+//    private int getIndexByName(String title) {
+//        int index = -1;
+//        for (Book book: books
+//             ) {
+//            if(book.getTitle().equals(title)){
+//                return books.indexOf(book);
+//            }
+//        }
+//        return index;
+//    }
 }
