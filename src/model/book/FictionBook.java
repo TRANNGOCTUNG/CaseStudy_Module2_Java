@@ -2,7 +2,7 @@ package model.book;
 
 import java.io.Serializable;
 
-public class FictionBook extends Book implements Serializable,Comparable<FictionBook> {
+public class FictionBook extends Book implements Serializable {
     private String category;
 
     public FictionBook() {
@@ -24,12 +24,9 @@ public class FictionBook extends Book implements Serializable,Comparable<Fiction
     @Override
     public String toString() {
         return "FictionBook{" +
+                super.toString()+
                 "category='" + category + '\'' +
                 '}';
     }
 
-    @Override
-    public int compareTo(FictionBook o) {
-        return 0;
-    }
 }

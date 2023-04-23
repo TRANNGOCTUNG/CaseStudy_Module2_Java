@@ -2,7 +2,7 @@ package model.book;
 
 import java.io.Serializable;
 
-public class ProgramingBook extends Book implements Serializable,Comparable<ProgramingBook> {
+public class ProgramingBook extends Book implements Serializable {
     private String Language;
 
     public ProgramingBook() {
@@ -25,12 +25,9 @@ public class ProgramingBook extends Book implements Serializable,Comparable<Prog
     @Override
     public String toString() {
         return "ProgramingBook{" +
+                super.toString()+
                 "Language='" + Language + '\'' +
                 '}';
     }
 
-    @Override
-    public int compareTo(ProgramingBook o) {
-        return 0;
-    }
 }

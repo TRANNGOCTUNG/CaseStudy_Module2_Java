@@ -1,5 +1,7 @@
 package model.Interface;
 
+import model.book.Book;
+
 import java.util.List;
 
 public interface CRUD<T> {

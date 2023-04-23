@@ -9,12 +9,18 @@ import model.book.FictionBook;
 import model.book.ProgramingBook;
 import read_write_file_singleton.ReadWriteFile;
 
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
 
-public class BookManager implements CRUD<BookManager>,InUpSort<BookManager>,RealMoney {
+public class BookManager implements CRUD<Book>,InUpSort<Book>,RealMoney {
+    private Scanner scanner = new Scanner(System.in);
+    public ReadWriteFile<Book> bookManager = ReadWriteFile.getINSTANCE();
     public List<Book> books;
-
     public BookManager() {
         books = new ArrayList<>();
         books.add(new FictionBook(1,"Đỏ trỗi dậy","Lê Đình Chi",20,102.000,"English"));
@@ -28,33 +34,54 @@ public class BookManager implements CRUD<BookManager>,InUpSort<BookManager>,Real
         books.add(new BusinessBook(9,"Đọc vị bất kì ai","Xuân Chi Dịch",12,90.000,"Việt Nam"));
 
     }
+
     @Override
-    public void add(List value) {
+    public void add(List<Book> value) {
+        books.add((Book) value);
+    }
+    public void write(){
+        bookManager.writeFile(books,"books.txt");
+    }
+
+    @Override
+    public void display(List<Book> value) {
+        for (Book b:books
+             ) {
+            System.out.println(b);
+        }
+        bookManager.writeFile(books,"books.txt");
+    }
+
+    @Override
+    public void edit(List<Book> value, int index) {
+        System.out.println("Enter index: " + index);
+        index = scanner.nextInt();
+        for (int i = 0; i < value.size(); i++) {
+            if(i == index) {
+                books.set(i,(Book) value);
+            }
+        }
 
     }
 
     @Override
-    public void display(List value) {
+    public void delete(List<Book> value, int index) {
+        for (int i = 0; i < value.size(); i++) {
+            if(i == index) {
+                value.remove(i);
+                break;
+            }
+        }
 
     }
 
     @Override
-    public void edit(List value, int index) {
+    public void insert(List<Book> list, int index) {
 
     }
 
     @Override
-    public void delete(List value, int index) {
-
-    }
-
-    @Override
-    public void insert(List list, int index) {
-
-    }
-
-    @Override
-    public void update(List list) {
+    public void update(List<Book> list) {
 
     }
 

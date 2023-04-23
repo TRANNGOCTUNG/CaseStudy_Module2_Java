@@ -2,7 +2,7 @@ package model.book;
 
 import java.io.Serializable;
 
-public class Book implements Serializable {
+public abstract class Book implements Serializable {
     private int id;
     private String title;
     private String author;
