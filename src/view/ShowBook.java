@@ -12,13 +12,17 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ShowBook {
-    static List<Book> book = new ArrayList<Book>();
+    static List<Book> book = new ArrayList<>();
     static BookManager bookManager = new BookManager();
     public static void main(String[] args) {
-       bookManager.display(book);
-        Scanner scanner = new Scanner(System.in);
-        bookManager.write();
-        ReadWriteFile.getINSTANCE().readFile("books.txt");
+//       bookManager.display(book);
+//        Scanner scanner = new Scanner(System.in);
+//        bookManager.write();
+//        ReadWriteFile.getINSTANCE().readFile("books.txt");
+//        bookManager.getRealMoney();
+
+       bookManager.readData();
+
 
     }
 }

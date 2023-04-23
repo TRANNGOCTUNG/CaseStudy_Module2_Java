@@ -39,7 +39,7 @@ public class BookManager implements CRUD<Book>, InSearchSort<Book>,RealMoney {
 
     @Override
     public void display(List<Book> value) {
-        for (Book b:value
+        for (Book b:books
              ) {
             System.out.println(b);
 
@@ -56,7 +56,7 @@ public class BookManager implements CRUD<Book>, InSearchSort<Book>,RealMoney {
                 books.set(i,(Book) value);
             }
         }
-        readWriteFile.writeFile();
+        readWriteFile.writeFile(value,"books.txt");
 
     }
 
@@ -93,16 +93,71 @@ public class BookManager implements CRUD<Book>, InSearchSort<Book>,RealMoney {
 
     @Override
     public void sort() {
-
+        Collections.sort(books, new Comparator<Book>() {
+            @Override
+            public int compare(Book o1, Book o2) {
+                return o1.getTitle().compareTo(o2.getTitle());
+            }
+            private String getCategory(Book o){
+                if( o instanceof FictionBook){
+                    return ((FictionBook)o).getCategory();
+                } else {
+                    throw new IllegalArgumentException("Object type not supported.");
+                }
+            }
+            private String getLanguage(Book o){
+                if( o instanceof ProgramingBook){
+                    return ((ProgramingBook)o).getLanguage();
+                } else {
+                    throw new IllegalArgumentException("Object type not supported.");
+                }
+            }
+        });
+    }
+    public int totalLanguage(List<Book> list, String language,String name) {
+        int total = 0;
+        if (name.equals("FictionBook")) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i) instanceof FictionBook) {
+                    if (((FictionBook) list.get(i)).getCategory().equals(language)) {
+                        total++;
+                    }
+                }
+            }
+            } else if (name.equals("ProgramingBook")) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i) instanceof ProgramingBook) {
+                    if (((ProgramingBook) list.get(i)).getLanguage().equals(language)) {
+                        total++;
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i) instanceof BusinessBook) {
+                    if (((BusinessBook) list.get(i)).getOrigin().equals(language)) {
+                        total++;
+                    }
+                }
+            }
+        }
+        return total;
 
     }
 
     @Override
     public void getRealMoney() {
+        double total = 0;
+        for (Book book: books
+             ) {
+            total += book.getPrice();
+        }
+        System.out.println("Total money book: " + total + " VND ");
+
 
     }
     public void readData(){
-        books = readWriteFile.readFile("books.txt");
+        readWriteFile.readFile("books.txt");
 
     }
 //    private int getIndexByName(String title) {

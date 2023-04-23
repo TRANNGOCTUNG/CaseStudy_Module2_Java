@@ -22,7 +22,7 @@ public class ReadWriteFile<T> {
             read =(List<T>) ois.readObject();
             fis.close();
             ois.close();
-            System.out.println("Read file successfully: " + read.size());
+            System.out.println("Read file successfully: " + read );
         } catch (IOException e) {
             System.out.println("Read file failed: " + e.getMessage());
         }catch (ClassNotFoundException e){
