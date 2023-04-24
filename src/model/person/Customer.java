@@ -23,7 +23,8 @@ public class Customer extends Person implements Serializable {
 
     @Override
     public String toString() {
-        return "Customer{"+
+        return super.toString() +
+                "Customer{"+
                 "phone='" + phone + '\'' +
                 '}';
     }

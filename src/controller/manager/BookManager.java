@@ -12,9 +12,12 @@ import read_write_file_singleton.ReadWriteFile;
 import java.util.*;
 
 public class BookManager implements CRUD<Book>, InSearchSort<Book>,RealMoney {
-    private Scanner scanner = new Scanner(System.in);
     public ReadWriteFile<Book> readWriteFile = ReadWriteFile.getINSTANCE();
     public List<Book> books;
+
+    public BookManager(List<Book> books) {
+        this.books = books;
+    }
     public BookManager() {
         books = new ArrayList<>();
         books.add(new FictionBook(1,"Đỏ trỗi dậy","Lê Đình Chi",20,102.000,"English"));
@@ -28,13 +31,9 @@ public class BookManager implements CRUD<Book>, InSearchSort<Book>,RealMoney {
         books.add(new BusinessBook(9,"Đọc vị bất kì ai","Xuân Chi Dịch",12,90.000,"Việt Nam"));
 
     }
-
     @Override
     public void add(List<Book> value) {
         books.add((Book) value);
-    }
-    public void write(){
-        readWriteFile.writeFile(books,"books.txt");
     }
 
     @Override
@@ -44,33 +43,26 @@ public class BookManager implements CRUD<Book>, InSearchSort<Book>,RealMoney {
             System.out.println(b);
 
         }
-        readWriteFile.writeFile(books,"books.txt");
     }
-
     @Override
     public void edit(List<Book> value, int index) {
-        System.out.println("Enter index: " + index);
-        index = scanner.nextInt();
         for (int i = 0; i < value.size(); i++) {
             if(i == index) {
                 books.set(i,(Book) value);
             }
         }
-        readWriteFile.writeFile(value,"books.txt");
-
     }
 
     @Override
     public void delete(List<Book> value, int index) {
         for (int i = 0; i < value.size(); i++) {
             if(i == index) {
-                value.remove(i);
+                books.remove(i);
                 break;
             }
         }
 
     }
-
     @Override
     public void insert(List<Book> list, int index) {
         if(index >= 0) {
@@ -79,7 +71,6 @@ public class BookManager implements CRUD<Book>, InSearchSort<Book>,RealMoney {
             books.add((Book) list);
         }
     }
-
     @Override
     public void search(List<Book> list, String name) {
         for (int i = 0; i < list.size(); i++) {
@@ -90,7 +81,6 @@ public class BookManager implements CRUD<Book>, InSearchSort<Book>,RealMoney {
             }
         }
     }
-
     @Override
     public void sort() {
         Collections.sort(books, new Comparator<Book>() {
@@ -144,7 +134,6 @@ public class BookManager implements CRUD<Book>, InSearchSort<Book>,RealMoney {
         return total;
 
     }
-
     @Override
     public void getRealMoney() {
         double total = 0;
@@ -160,6 +149,10 @@ public class BookManager implements CRUD<Book>, InSearchSort<Book>,RealMoney {
         readWriteFile.readFile("books.txt");
 
     }
+    public void write(List<Book> value,String path) {
+        readWriteFile.writeFile(books,path);
+    }
+
 //    private int getIndexByName(String title) {
 //        int index = -1;
 //        for (Book book: books

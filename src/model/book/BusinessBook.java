@@ -23,8 +23,8 @@ public class BusinessBook extends Book implements Serializable {
 
     @Override
     public String toString() {
-        return "BusinessBook{" +
-                super.toString()+
+        return  super.toString()+
+                "BusinessBook{" +
                 "origin='" + origin + '\'' +
                 '}';
     }

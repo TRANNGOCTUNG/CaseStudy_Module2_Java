@@ -23,7 +23,8 @@ public class PersonManager extends Person implements Serializable {
 
     @Override
     public String toString() {
-        return "PersonManager{" +
+        return  super.toString()+
+                "PersonManager{" +
                 "position='" + position + '\'' +
                 '}';
     }

@@ -19,10 +19,11 @@ public class ReadWriteFile<T> {
         try {
             FileInputStream fis = new FileInputStream(path);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            read =(List<T>) ois.readObject();
+            read =(List<T>) ois.readObject() ;
+            String line = read + "\n";
             fis.close();
             ois.close();
-            System.out.println("Read file successfully: " + read );
+            System.out.println("Read file successfully: " + line );
         } catch (IOException e) {
             System.out.println("Read file failed: " + e.getMessage());
         }catch (ClassNotFoundException e){
